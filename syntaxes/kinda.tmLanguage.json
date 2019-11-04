@@ -1,0 +1,443 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "kinda",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#comment"
+		},
+		{
+			"include": "#enum"
+		},
+		{
+			"include": "#flags"
+		},
+		{
+			"include": "#record"
+		},
+		{
+			"include": "#interface"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.kinda",
+					"match": "(^|$|\\W)(@import|if|while|for|return)(^|$|\\W)"
+				}
+			]
+		},
+		"types": {
+			"patterns": [
+				{
+					"name": "constant.language",
+					"match": "\\b(bool|i8|i16|i32|i64|f32|f64|string|binary|date)\\b"
+				},
+				{
+					"name": "keyword.operator.kinda",
+					"begin": "(list|set|optional|map)(<)",
+					"beginCaptures": {
+						"1": {
+							"name": "constant.language"
+						},
+						"2": {
+							"name": "keyword.operator.kinda"
+						}
+					},
+					"end": ">",
+					"patterns": [
+						{
+							"include": "#types"
+						},
+						{
+							"include": "#comma"
+						}
+					]
+				},
+				{
+					"match": "\\w+",
+					"name": "entity.name.class"
+				}
+			]
+		},
+		"enum": {
+			"patterns": [
+				{
+					"begin": "(\\w+)\\s*(=)\\s*(enum)[\\s\\n]*{",
+					"beginCaptures": {
+						"1": {
+							"name": "variable.name"
+						},
+						"2": {
+							"name": "keyword.operator.kinda"
+						},
+						"3": {
+							"name": "keyword.control.kinda"
+						}
+					},
+					"end": "}",
+					"patterns": [
+						{
+							"begin": "(\\w+)",
+							"beginCaptures": {
+								"1": {
+									"name": "variable.name"
+								}
+							},
+							"end": "(;)",
+							"endCaptures": {
+								"1": {
+									"name": "keyword.operator.kinda"
+								}
+							},
+							"patterns": [
+								{
+									"include": "#comment"
+								}
+							]
+						},
+						{
+							"include": "#comment"
+						}
+					]
+				}
+			]
+		},
+		"flags": {
+			"patterns": [
+				{
+					"begin": "(\\w+)\\s*(=)\\s*(flags)\\s*({)",
+					"beginCaptures": {
+						"1": {
+							"name": "variable.name"
+						},
+						"2": {
+							"name": "keyword.operator.kinda"
+						},
+						"3": {
+							"name": "keyword.control.kinda"
+						},
+						"4": {
+							"name": "punctuation.definition.block.kinda"
+						}
+					},
+					"end": "(})",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.definition.block.kinda"
+						}
+					},
+					"patterns": [
+						{
+							"begin": "(\\w+)(\\s*(=)\\s*(none|all))?",
+							"beginCaptures": {
+								"1": {
+									"name": "variable.name"
+								},
+								"3": {
+									"name": "keyword.operator.kinda"
+								}
+							},
+							"end": "(;)",
+							"endCaptures": {
+								"1": {
+									"name": "keyword.control.kinda"
+								}
+							},
+							"patterns": [
+								{
+									"include": "#comment"
+								}
+							]
+						},
+						{
+							"include": "#comment"
+						}
+					]
+				}
+			]
+		},
+		"record": {
+			"patterns": [
+				{
+					"begin": "(\\w+)\\s*(=)\\s*(record)\\s+((\\+[cjo]\\s+)*)({)",
+					"beginCaptures": {
+						"1": {
+							"name": "variable.name"
+						},
+						"2": {
+							"name": "keyword.operator.kinda"
+						},
+						"3": {
+							"name": "keyword.control.kinda"
+						},
+						"4": {
+							"name": "entity.name.tag"
+						},
+						"5": {
+							"name": "punctuation.definition.block.kinda"
+						}
+					},
+					"end": "(})(\\s*(deriving)\\s\\([^\\)]*\\))?",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.definition.block.kinda"
+						},
+						"3": {
+							"name": "storage.modifier"
+						}
+					},
+					"patterns": [
+						{
+							"begin": "(\\w+)\\s*(:)",
+							"beginCaptures": {
+								"1": {
+									"name": "variable.name"
+								},
+								"2": {
+									"name": "keyword.operator.kinda"
+								}
+							},
+							"end": "(;)",
+							"endCaptures": {
+								"1": {
+									"name": "keyword.operator.kinda"
+								}
+							},
+							"patterns": [
+								{
+									"include": "#types"
+								}
+							]
+						},
+						{
+							"include": "#comment"
+						},
+						{
+							"include": "#constant-property"
+						}
+					]
+				}
+			]
+		},
+		"interface": {
+			"patterns": [
+				{
+					"begin": "(\\w+)\\s*(=)\\s*(interface)\\s+((\\+(c|j|o|proxy)\\s*)*)({)",
+					"beginCaptures": {
+						"1": {
+							"name": "variable.name"
+						},
+						"2": {
+							"name": "keyword.operator.kinda"
+						},
+						"3": {
+							"name": "keyword.control.kinda"
+						},
+						"4": {
+							"name": "entity.name.tag"
+						}
+					},
+					"end": "}",
+					"patterns": [
+						{
+							"name": "meta.method.kinda",
+							"begin": "(static\\s+)?(\\w+)\\s*(\\()",
+							"beginCaptures": {
+								"1": {
+									"name": "storage.modifier"
+								},
+								"2": {
+									"name": "entity.name.function"
+								},
+								"3": {
+									"name": "meta.brace.round"
+								}
+							},
+							"end": "(\\))(\\s*(:)([^;]*))?(;)",
+							"endCaptures": {
+								"1": {
+									"name": "meta.brace.round"
+								},
+								"3": {
+									"name": "keyword.operator.type.annotation.kinda"
+								},
+								"4": {
+									"patterns": [
+										{
+											"include": "#types"
+										}
+									]
+								},
+								"5": {
+									"name": "punctuation.terminator"
+								}
+							},
+							"patterns": [
+								{
+									"match": "\\s*(\\w+)\\s*(:)([^,\\)]*)",
+									"captures": {
+										"1": {
+											"name": "variable.parameter.kinda"
+										},
+										"2": {
+											"name": "keyword.operator.type.annotation.kinda"
+										},
+										"3": {
+											"patterns": [
+												{
+													"include": "#types"
+												}
+											]
+										}
+									}
+								},
+								{
+									"include": "#comma"
+								}
+							]
+						},
+						{
+							"include": "#comment"
+						},
+						{
+							"include": "#constant-property"
+						}
+					]
+				}
+			]
+		},
+		"constant-property": {
+			"patterns": [
+				{
+					"name": "constant.other.kinda",
+					"begin": "(const)\\s+(\\w+)\\s*(:)\\s*([^=]+)\\s*(=)",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.modifier"
+						},
+						"2": {
+							"name": "variable.name"
+						},
+						"3": {
+							"name": "keyword.operator.type.annotation.kinda"
+						},
+						"4": {
+							"patterns": [
+								{
+									"include": "#types"
+								}
+							]
+						},
+						"5": {
+							"name": "keyword.operator.assignment.kinda"
+						}
+					},
+					"end": "(;)",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.terminator"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#value-literal"
+						}
+					]
+				}
+			]
+		},
+		"value-literal": {
+			"patterns": [
+				{
+					"name": "meta.object-literal.kinda",
+					"begin": "{",
+					"end": "}",
+					"patterns": [
+						{
+							"include": "#comma"
+						},
+						{
+							"name": "constant.other.property.kinda",
+							"begin": "(\\w+)\\s*(=)",
+							"beginCaptures": {
+								"1": {
+									"name": "meta.object-literal.key.kinda"
+								},
+								"2": {
+									"name": "keyword.operator.assignment.kinda"
+								}
+							},
+							"end": "(?=[,}])",
+							"endCaptures": {
+								"1": {
+									"name": "punctuation.terminator"
+								}
+							},
+							"patterns": [
+								{
+									"include": "#value-literal"
+								}
+							]
+						}
+					]
+				},
+				{
+					"include": "#strings"
+				},
+				{
+					"include": "#numbers"
+				}
+			]
+		},
+		"comment": {
+			"patterns": [
+				{
+					"begin": "(#)",
+					"beginCaptures": {
+						"1": {
+							"name": "comment.line.hashtag.kinda"
+						}
+					},
+					"end": "(?=$)",
+					"contentName": "comment.line.hashtag.kinda"
+				}
+			]
+		},
+		"numbers": {
+			"name": "constant.numeric.kinda",
+			"patterns": [
+				{
+					"match": "\\d+",
+					"name": "constant.numeric.kinda"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.kinda",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.kinda",
+					"match": "\\\\."
+				}
+			]
+		},
+		"comma": {
+			"patterns": [
+				{
+					"match": ",",
+					"name": "punctuation.separator.comma.kinda"
+				}
+			]
+		}
+	},
+	"scopeName": "source.kinda"
+}

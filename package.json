@@ -1,0 +1,25 @@
+{
+    "name": "kinda",
+    "displayName": "kinda",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.39.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "kinda",
+            "aliases": ["kinda", "kinda"],
+            "extensions": [".kinda"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "kinda",
+            "scopeName": "source.kinda",
+            "path": "./syntaxes/kinda.tmLanguage.json"
+        }]
+    }
+}
