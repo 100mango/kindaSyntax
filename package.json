@@ -1,6 +1,7 @@
 {
     "name": "kinda",
     "displayName": "kinda",
+    "publisher" : "100mango",
     "description": "",
     "version": "0.0.1",
     "engines": {
@@ -21,5 +22,10 @@
             "scopeName": "source.kinda",
             "path": "./syntaxes/kinda.tmLanguage.json"
         }]
-    }
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Microsoft/vscode-wordcount.git"
+    },
+    "homepage": "https://github.com/Microsoft/vscode-wordcount/blob/master/README.md"
 }
