@@ -3,7 +3,7 @@
     "displayName": "kinda",
     "publisher" : "100mango",
     "description": "",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "engines": {
         "vscode": "^1.39.0"
     },
@@ -23,6 +23,7 @@
             "path": "./syntaxes/kinda.tmLanguage.json"
         }]
     },
+    "icon": "icon.png",
     "repository": {
       "type": "git",
       "url": "https://github.com/Microsoft/vscode-wordcount.git"
