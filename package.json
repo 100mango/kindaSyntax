@@ -3,7 +3,7 @@
     "displayName": "kinda",
     "publisher" : "100mango",
     "description": "",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "engines": {
         "vscode": "^1.39.0"
     },
@@ -26,7 +26,7 @@
     "icon": "icon.png",
     "repository": {
       "type": "git",
-      "url": "https://github.com/Microsoft/vscode-wordcount.git"
+      "url": "https://github.com/100mango/kindaSyntax.git"
     },
-    "homepage": "https://github.com/Microsoft/vscode-wordcount/blob/master/README.md"
+    "homepage": "https://github.com/100mango/kindaSyntax"
 }
