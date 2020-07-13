@@ -1,6 +1,7 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "kinda",
+	"scopeName": "source.kinda",
 	"patterns": [
 		{
 			"include": "#keywords"
@@ -247,6 +248,130 @@
 					"end": "}",
 					"patterns": [
 						{
+							"name": "meta.prop.kinda",
+							"begin": "(prop)\\s*(\\w+):\\s*(\\w+)(\\s*=\\s*\\w+)?",
+							"beginCaptures": {
+								"1": {
+									"name": "keyword.operator.kinda"
+								},
+								"2": {
+									"name": "variable.name"
+								},
+								"3": {
+									"name": "entity.name.type"
+								}
+							},
+							"end": "(;)",
+							"endCaptures": {
+							},
+							"patterns": [
+							]
+						},
+						{
+							"name": "meta.method.kinda",
+							"begin": "(static\\s+)?(\\w+)\\s*(\\()",
+							"beginCaptures": {
+								"1": {
+									"name": "storage.modifier"
+								},
+								"2": {
+									"name": "entity.name.function"
+								},
+								"3": {
+									"name": "meta.brace.round"
+								}
+							},
+							"end": "(\\))(\\s*(:)([^;]*))?(;)",
+							"endCaptures": {
+								"1": {
+									"name": "meta.brace.round"
+								},
+								"3": {
+									"name": "keyword.operator.type.annotation.kinda"
+								},
+								"4": {
+									"patterns": [
+										{
+											"include": "#types"
+										}
+									]
+								},
+								"5": {
+									"name": "punctuation.terminator"
+								}
+							},
+							"patterns": [
+								{
+									"match": "\\s*(\\w+)\\s*(:)([^,\\)]*)",
+									"captures": {
+										"1": {
+											"name": "variable.parameter.kinda"
+										},
+										"2": {
+											"name": "keyword.operator.type.annotation.kinda"
+										},
+										"3": {
+											"patterns": [
+												{
+													"include": "#types"
+												}
+											]
+										}
+									}
+								},
+								{
+									"include": "#comma"
+								}
+							]
+						},
+						{
+							"include": "#comment"
+						},
+						{
+							"include": "#constant-property"
+						}
+					]
+				},
+				{
+					"name": "interface.view",
+					"begin": "(\\w+)((:)\\s*(\\w+))?(\\s*=\\s*(\\w+))\\s*{",
+					"beginCaptures": {
+						"1": {
+							"name": "variable.name"
+						},
+						"2": {
+							"name": "keyword.operator.kinda"
+						},
+						"4": {
+							"name": "entity.other.inherited-class"
+						},
+						"6": {
+							"name": "keyword.operator.kinda"
+						}
+					},
+					"end": "}",
+					"patterns": [
+						{
+							"name": "meta.prop.kinda",
+							"begin": "(prop)\\s*(\\w+)\\s*:\\s*(\\w+)(\\s*=\\s*\\w+)?",
+							"beginCaptures": {
+								"1": {
+									"name": "keyword.operator.kinda"
+								},
+								"2": {
+									"name": "variable.name"
+								},
+								"3": {
+									"name": "entity.name.type"
+								}
+							},
+							"end": "(;)",
+							"endCaptures": {
+							},
+							"patterns": [
+							]
+						},
+						{
 							"name": "meta.method.kinda",
 							"begin": "(static\\s+)?(\\w+)\\s*(\\()",
 							"beginCaptures": {
@@ -438,6 +563,5 @@
 				}
 			]
 		}
-	},
-	"scopeName": "source.kinda"
+	}
 }
